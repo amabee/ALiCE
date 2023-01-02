@@ -1,18 +1,18 @@
 import nltk
-    """
-    The function chat() is a function that takes no arguments and returns nothing. It prints a message
-    to the user, then enters a while loop. The while loop will continue until the user types "quit". The
-    user's input is stored in the variable inp. If the user types "quit", the loop will break.
-    Otherwise, the program will run the user's input through the model.predict() function, which will
-    return a list of probabilities. The program will then find the index of the highest probability in
-    the list, and use that index to find the corresponding tag in the labels list. The program will then
-    search the intents.json file for a tag that matches the one it found, and print a random response
-    from the tag's list of responses
-    
-    :param s: The sentence to be classified
-    :param words: The bag of words model
-    :return: The chat function is returning the random choice of responses.
-    """
+# """
+#     The function chat() is a function that takes no arguments and returns nothing. It prints a message
+#     to the user, then enters a while loop. The while loop will continue until the user types "quit". The
+#     user's input is stored in the variable inp. If the user types "quit", the loop will break.
+#     Otherwise, the program will run the user's input through the model.predict() function, which will
+#     return a list of probabilities. The program will then find the index of the highest probability in
+#     the list, and use that index to find the corresponding tag in the labels list. The program will then
+#     search the intents.json file for a tag that matches the one it found, and print a random response
+#     from the tag's list of responses
+        
+#     :param s: The sentence to be classified
+#     :param words: The bag of words model
+#     :return: The chat function is returning the random choice of responses.
+#     """
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
 
@@ -128,5 +128,7 @@ def chat():
             if tg['tag'] == tag:
                 responses = tg['responses']
 
-        print(random.choice(responses))
+        print("ALiCE:" + random.choice(responses))
+
+
 chat()
