@@ -1,0 +1,22 @@
+{"intents": [
+    
+    {"tag" : "greetings",
+    "patterns" : ["hello" , "hey" , "hi" ,  "good day" , "heya" , "what's up" , "yo" , "good morning" , "hi there" , "good afternoon" , "good evening"],
+    "responses" : ["Hello! How are you?" , "Hi there! Good to see you" , "Hey! How's it going?" , "Greetings! How are things?" , "What can I do for you?"]    
+    },
+
+    {"tag" : "goodbye",
+    "patterns" : ["Goodbye" , "Take care" , "See you later" , "See you soon" , "I'll talk to you later" , "I'll see you tomorrow" , "I'll see you next time" , "Sayonara", "bye"],
+    "responses" : ["Bye" , "Goodbye" , "Ciao" , "Sayonara" , "Take Care" , "Bye Bye"]    
+    },
+
+    {"tag" : "age",
+    "patterns" : ["How old are you?" , "your age?" , "what is your age?"],
+    "responses" : ["I am currently 23 years old"]    
+    },
+
+    {"tag" : "name",
+    "patterns" : ["who are you?" , "what is your name?" , "your name?" , "can you tell me your name?", "whoami?"],
+    "responses" : ["I am ALiCE" , "My name is ALiCE"]    
+    }
+]}
