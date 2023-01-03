@@ -15,8 +15,34 @@
     "responses" : ["I am currently 23 years old"]    
     },
 
-    {"tag" : "name",
+    {"tag" : "identity",
     "patterns" : ["who are you?" , "what is your name?" , "your name?" , "can you tell me your name?", "whoami?"],
     "responses" : ["I am ALiCE" , "My name is ALiCE"]    
+    },
+
+    {"tag" : "google",
+    "patterns" : ["google" , "search google" , "search for", "search"],
+    "responses" : ["what to google?" , "search for?"]    
+    },
+
+    {"tag" : "questions",
+    "patterns" : ["what is"],
+    "responses" : ["Searching..."]    
+    },
+
+    {"tag": "music",
+    "patterns": ["play music", "music please"],
+    "responses":["playing"]
+    }
+    ,
+    {
+        "tag": "weather",
+        "patterns": ["weather", "weather today", "weather forecast"],
+        "responses": ["Gathering Data on weather."]
+    },
+    {
+        "tag": "timer",
+        "patterns": ["set timer", "timer"],
+        "responses" : ["Timer Started"]
     }
 ]}
