@@ -8,13 +8,14 @@ from keras.layers import Dense, Dropout, Activation
 import random
 import datetime
 import webbrowser
-from googlesearch import *
 import requests
 from ytmusicapi import YTMusic
 import time
 from pygame import mixer
 import os
 from nltk.stem import WordNetLemmatizer
+from googleapi import google
+
 lemmatizer = WordNetLemmatizer()
 
 words = []
@@ -77,7 +78,7 @@ model.add(Dense(len(training_Y[0]), activation='softmax'))
 
 adam=keras.optimizers.Adam(0.001)
 model.compile(optimizer=adam,loss='categorical_crossentropy', metrics=['accuracy'])
-weights = model.fit(np.array(training_X), np.array(training_Y), epochs=1000, batch_size=15, verbose=2)
+weights = model.fit(np.array(training_X), np.array(training_Y), epochs=1000, batch_size=15, verbose=0)
 model.save('model.h5',weights)
 
 model = load_model('model.h5')
@@ -130,16 +131,18 @@ def _getResponse(return_list , intents_json):
         print(time.strftime("%d %B %Y"))
         print(time.strftime("%H:%M:%S"))
 
-    if tag == 'google':
-        search_query = input("Enter Query...")
-        chrome_path = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe %s'
-        for url in search(search_query, tld="co.in", num=1, stop=1, pause=2):
-            webbrowser.open("https://google.com/search?q=%s" % search_query)
-        
+    if tag=='google':
+        query=input('What to Search?: ')
+        num_page = 3
+        search_results = google.search(query, num_page)
+        print(search_results)
+
+
     if tag=='weather':
         api_key='987f44e8c16780be8c85e25a409ed07b'
         base_url = "http://api.openweathermap.org/data/2.5/weather?"
         city_name = input("Enter city name: ")
+        print("Gathering Data on Weather...")
         complete_url = base_url + "appid=" + api_key + "&q=" + city_name
         response = requests.get(complete_url) 
         x=response.json()

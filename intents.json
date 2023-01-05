@@ -38,7 +38,7 @@
     {
         "tag": "weather",
         "patterns": ["weather", "weather today", "weather forecast"],
-        "responses": ["Gathering Data on weather."]
+        "responses": ["..."]
     },
     {
         "tag": "timer",
