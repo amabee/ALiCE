@@ -16,8 +16,8 @@ import os
 from nltk.stem import WordNetLemmatizer
 from datetime import datetime
 from colorama import init as colorama_init
-from colorama import Fore
-from colorama import Style
+from colorama import Fore, Style, Back
+
 
 
 
@@ -82,16 +82,16 @@ model.add(Dense(64,activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(len(training_Y[0]), activation='softmax'))
 
-adam=keras.optimizers.Adam(0.001)
+adam=keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-07, amsgrad=False)
 model.compile(optimizer=adam,loss='categorical_crossentropy', metrics=['accuracy'])
-weights = model.fit(np.array(training_X), np.array(training_Y), epochs=1000, batch_size=15, verbose=0)
+weights = model.fit(np.array(training_X), np.array(training_Y), epochs=1000, batch_size=15, verbose=1)
 model.save('model.h5',weights)
 
 model = load_model('model.h5')
 intents = json.loads(open('intents.json').read())
 words = pickle.load(open('words.pkl' , 'rb'))
 labels = pickle.load(open('labels.pkl' , 'rb'))
-
+colorama_init()
 
 #Predictions Area
 
@@ -108,14 +108,12 @@ def createBow(sentence , words):
         for i,w in enumerate(words):
             if w == _s_:
                 bag[i] =1
-            else:
-                bag[i] = 0
     return np.array(bag)
 
 def predict_label(sentence,model):
     pre=createBow(sentence,words)
     Res_ = model.predict(np.array([pre]))[0]
-    threshold = 0.8
+    threshold = 0.9
     try:
         results = [[i,r] for i,r in enumerate(Res_) if r>threshold]
         results.sort(key=lambda x: x[1], reverse=True)
@@ -150,10 +148,10 @@ def _getResponse(return_list , intents_json):
             response = requests.get(complete_url)
             if response.status_code == 200:
                 print("------" , city_name , "-------") 
-                x=response.json()
-                print('Temperature: ',round(x['main']['temp']-273,2),'celcius ')
-                print('Feels Like:: ',round(x['main']['feels_like']-273,2),'celcius ')
-                print("Description: ",x['weather'][0]['main'])
+                x=response.json()  
+                print(f'Temperature: {Fore.CYAN}',round(x['main']['temp']-273,2),'celcius')
+                print(f'Feels Like:: {Fore.CYAN}',round(x['main']['feels_like']-273,2),'celcius')
+                print(f"Description: {Fore.CYAN}",x['weather'][0]['main'])
                 data = (x['sys']['sunrise'])
                 ts = data
                 print(datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %h:%m:%S'))
@@ -176,19 +174,25 @@ def _getResponse(return_list , intents_json):
             mixer.music.play()
         else:
             print("The sound doesn't exist")
+    
+    if tag == 'commands':
+        cmd = input("Enter Command: ")
+        os.system(cmd)
 
     intents_list = intents_json['intents']
     for i in intents_list:
         if tag == i['tag']:
             result = random.choice(i['responses'])
             return result
+    if tag != i['tag']:
+        return "I don't know what you mean. Please try again!"
 
 def response(text):
     return_list = predict_label(text,model)
     response = _getResponse(return_list, intents)
     return "ALiCE: "+ response
 
-colorama_init()
+
 print(f"{Fore.GREEN}Start Talking with ALiCE:{Style.RESET_ALL}")
 while(1):
     x=input(f"{Fore.CYAN}You: {Style.BRIGHT}")

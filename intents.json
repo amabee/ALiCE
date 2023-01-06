@@ -38,12 +38,19 @@
     {
         "tag": "timer",
         "patterns": ["set timer", "timer"],
-        "responses" : ["Timer Started"]
+        "responses" : ["Timer Done..."]
     },
 
     {
         "tag": "datetime",
         "patterns": ["date today", "what day is today?", "date"],
         "responses" : ["..."]
+    },
+
+    {
+        "tag": "commands",
+        "patterns": ["command", "cmd"],
+        "responses" : ["..."]
     }
+
 ]}
