@@ -14,7 +14,7 @@ import time
 from pygame import mixer
 import os
 from nltk.stem import WordNetLemmatizer
-from googleapi import google
+from datetime import datetime
 
 lemmatizer = WordNetLemmatizer()
 
@@ -131,24 +131,28 @@ def _getResponse(return_list , intents_json):
         print(time.strftime("%d %B %Y"))
         print(time.strftime("%H:%M:%S"))
 
-    if tag=='google':
-        query=input('What to Search?: ')
-        num_page = 3
-        search_results = google.search(query, num_page)
-        print(search_results)
 
 
     if tag=='weather':
-        api_key='987f44e8c16780be8c85e25a409ed07b'
-        base_url = "http://api.openweathermap.org/data/2.5/weather?"
-        city_name = input("Enter city name: ")
-        print("Gathering Data on Weather...")
-        complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-        response = requests.get(complete_url) 
-        x=response.json()
-        print('Present temp.: ',round(x['main']['temp']-273,2),'celcius ')
-        print('Feels Like:: ',round(x['main']['feels_like']-273,2),'celcius ')
-        print(x['weather'][0]['main'])
+        try:
+            api_key='987f44e8c16780be8c85e25a409ed07b'
+            base_url = "http://api.openweathermap.org/data/2.5/weather?"
+            city_name = input("Enter city name: ")
+            print("Gathering Data on Weather...")
+            time.sleep(3)
+            complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+            response = requests.get(complete_url)
+            if response.status_code == 200:
+                print("------" , city_name , "-------") 
+                x=response.json()
+                print('Temperature: ',round(x['main']['temp']-273,2),'celcius ')
+                print('Feels Like:: ',round(x['main']['feels_like']-273,2),'celcius ')
+                print("Description: ",x['weather'][0]['main'])
+                data = (x['sys']['sunrise'])
+                ts = data
+                print(datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %h:%m:%S'))
+        except:
+            print("Failed to fetch weather...")
 
     if tag == 'music':
         yt = YTMusic('headers_auth.json')
@@ -178,9 +182,9 @@ def response(text):
     response = _getResponse(return_list, intents)
     return "ALiCE: "+ response
 
-print("Type Something...")
+print("Start Talking with ALiCE:")
 while(1):
     x=input("You: ")
     print(response(x))
-    if x.lower() in ["Goodbye" , "Take care" , "See you later" , "See you soon" , "I'll talk to you later" , "I'll see you tomorrow" , "I'll see you next time" , "Sayonara", "bye", 'quit']:
+    if x.lower() in ["Goodbye" , "Take care" , "See you later" , "See you soon" , "I'll talk to you later" , "I'll see you tomorrow" , "I'll see you next time" , "Sayonara", "bye", "quit"]:
         break

@@ -6,7 +6,7 @@
     },
 
     {"tag" : "goodbye",
-    "patterns" : ["Goodbye" , "Take care" , "See you later" , "See you soon" , "I'll talk to you later" , "I'll see you tomorrow" , "I'll see you next time" , "Sayonara", "bye"],
+    "patterns" : ["Goodbye" , "Take care" , "See you later" , "See you soon" , "I'll talk to you later" , "I'll see you tomorrow" , "I'll see you next time" , "Sayonara", "bye", "byebye", "quit"],
     "responses" : ["Bye" , "Goodbye" , "Ciao" , "Sayonara" , "Take Care" , "Bye Bye"]    
     },
 
