@@ -15,6 +15,12 @@ from pygame import mixer
 import os
 from nltk.stem import WordNetLemmatizer
 from datetime import datetime
+from colorama import init as colorama_init
+from colorama import Fore
+from colorama import Style
+
+
+
 
 lemmatizer = WordNetLemmatizer()
 
@@ -86,6 +92,7 @@ intents = json.loads(open('intents.json').read())
 words = pickle.load(open('words.pkl' , 'rb'))
 labels = pickle.load(open('labels.pkl' , 'rb'))
 
+
 #Predictions Area
 
 def cleanUp(sentence):
@@ -122,16 +129,15 @@ def predict_label(sentence,model):
 
 def _getResponse(return_list , intents_json):
     if len(return_list) == 0:
-        tag='no response'
+        tag = 'no response'
     else:
         tag=return_list[0]['intent']
     
     if tag== 'datetime':
+        print("Today is:")
         print(time.strftime("%A"))
         print(time.strftime("%d %B %Y"))
-        print(time.strftime("%H:%M:%S"))
-
-
+        print(time.strftime("%h:%m:%S"))
 
     if tag=='weather':
         try:
@@ -182,9 +188,10 @@ def response(text):
     response = _getResponse(return_list, intents)
     return "ALiCE: "+ response
 
-print("Start Talking with ALiCE:")
+colorama_init()
+print(f"{Fore.GREEN}Start Talking with ALiCE:{Style.RESET_ALL}")
 while(1):
-    x=input("You: ")
-    print(response(x))
+    x=input(f"{Fore.CYAN}You: {Style.BRIGHT}")
+    print(f"{Fore.YELLOW}"+response(x))
     if x.lower() in ["Goodbye" , "Take care" , "See you later" , "See you soon" , "I'll talk to you later" , "I'll see you tomorrow" , "I'll see you next time" , "Sayonara", "bye", "quit"]:
         break

@@ -20,11 +20,6 @@
     "responses" : ["I am ALiCE" , "My name is ALiCE"]    
     },
 
-    {"tag" : "google",
-    "patterns" : ["google" , "search google" , "search for", "search"],
-    "responses" : ["what to google?" , "search for?"]    
-    },
-
     {"tag" : "questions",
     "patterns" : ["what is"],
     "responses" : ["Searching..."]    
@@ -44,5 +39,11 @@
         "tag": "timer",
         "patterns": ["set timer", "timer"],
         "responses" : ["Timer Started"]
+    },
+
+    {
+        "tag": "datetime",
+        "patterns": ["date today", "what day is today?", "date"],
+        "responses" : ["..."]
     }
 ]}
